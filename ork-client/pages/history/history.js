@@ -1,19 +1,66 @@
 // pages/history/history.js
+const app = getApp();
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    showActionsheet: false,
+    groups: [
+      { text: '删除', value: 1 }
+    ],
+    todo:[],
+    index:null
   },
+  btnClick(e) {
+    let index = e.detail.index;
+    if (this.data.groups[index].value === 1) {
+      this.delete();
+    }else {
+      this.setData({
+      showActionsheet: false
+      })
+    }
+  },
+  Click(e) {
+    let index = e.currentTarget.dataset.id;
+    this.setData({
+      showActionsheet: true,
+      index: index,
+    })
+  },
+  delete() {
+    let id = this.data.index
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
+    wx.request({
+      url: `http://localhost:3000/api/todos/${id}`,
+      method: "DELETE",
+      success:(res) => {
+        let deleteIndex = app.globalData.todo.findIndex(item => item.id === id);
+        if (deleteIndex !== -1) {
+          app.globalData.todo.splice(deleteIndex,1);
+          this.setData({
+            todo:app.globalData.todo,
+            showActionsheet: false
+          });
+        }
+      }
+    })
+  },
+ 
   onLoad(options) {
-
+    this.getAllTodos();
   },
+  getAllTodos() {
+    wx.request({
+      url: 'http://localhost:3000/todos',
+      method: 'GET',
+      success:(res) => {
+        app.globalData.todo = res.data.data;
+        this.setData({
+          todo:app.globalData.todo
+        })
+      }
+    })
+   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

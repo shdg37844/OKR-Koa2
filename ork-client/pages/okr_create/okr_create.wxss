@@ -1,1 +1,6 @@
-/* pages/okr_create/okr_create.wxss */
+.page-container {
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  padding:40rpx 35rpx;
+}

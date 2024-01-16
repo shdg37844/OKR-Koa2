@@ -1,2 +1,15 @@
-<!--pages/history/history.wxml-->
-<text>pages/history/history.wxml</text>
+<view class="page-container">
+  <view class="todo-title">已完成的todos，真棒！</view>
+  <view class="done-list">
+    <view class="done-item" bind:tap="Click" data-id="{{item.id}}" wx:for="{{todo}}" wx:if="{{item.completed===1}}">
+      <view class="done-content">{{item.todo}}</view>
+      <view class="done-time">创建时间{{item.create_at}}</view>
+      <view class="done-pic-box">
+        <image src="./../../images/tododone.png" class="done-pic"/>
+      </view>
+    </view>
+  </view>
+
+  <mp-actionSheet bindactiontap="btnClick" show="{{showActionsheet}}" actions="{{groups}}">
+  </mp-actionSheet>
+</view>

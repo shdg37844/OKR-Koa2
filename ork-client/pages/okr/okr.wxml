@@ -1,2 +1,8 @@
-<!--pages/okr/okr.wxml-->
-<text>pages/okr/okr.wxml</text>
+<view class="page-container">
+  <navigator url="/pages/okr_create/okr_create" class="add-btn" hover-class="add-btn_hover">添加OKR</navigator>
+  <view class="okr-list">
+    <view bind:tap="Click" class="okr-item" data-index="{{index}}">okr1</view>
+  </view>
+  <mp-actionSheet bindactiontap="btnClick" show="{{showActionsheet}}" actions="{{groups}}">
+  </mp-actionSheet>
+</view>

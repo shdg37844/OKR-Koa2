@@ -1,16 +1,20 @@
 {
   "pages": [
-    "pages/welcome/welcome",
     "pages/todo/todo",
-    "pages/todo_keyresult/todo_keyresult",
-    "pages/okr/okr",
-    "pages/okr_edit/okr_edit",
     "pages/okr_create/okr_create",
+    
+    "pages/welcome/welcome",
+    "pages/okr/okr",
+    
+    "pages/todo_keyresult/todo_keyresult",
+    "pages/okr_edit/okr_edit",
+    
     "pages/okr_detail/okr_detail",
     "pages/history/history"
   ],
   "window": {
-    "navigationBarTitleText": "OKR管理"
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#ffffff"
   },
   "tabBar": {
     "color": "#fff",
@@ -35,6 +39,9 @@
         "selectedIconPath": "/images/okr_active.png"
       }
     ]
+  },
+  "useExtendedLib": {
+    "weui": true
   },
   "style": "v2",
   "componentFramework": "glass-easel",

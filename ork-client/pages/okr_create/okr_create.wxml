@@ -1,2 +1,9 @@
-<!--pages/okr_create/okr_create.wxml-->
-<text>pages/okr_create/okr_create.wxml</text>
+<view class="page-container">
+  <view class="create-box">
+  <view class="create-title"></view>
+  <view>
+    <input type="text" class="create-input"/>
+    <button>新增</button>
+  </view>
+  </view>
+</view>

@@ -1,18 +1,16 @@
 // pages/welcome/welcome.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
 
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
+  },
 
+  switchToTodo() {
+    wx.switchTab({
+      url: '/pages/todo/todo',
+    })
   },
 
   /**

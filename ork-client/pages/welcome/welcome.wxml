@@ -1,2 +1,17 @@
-<!--pages/welcome/welcome.wxml-->
-<text>pages/welcome/welcome.wxml</text>
+<view class="page-container">
+  <view class="text">
+    <view class="title">
+      <image src="./../../images/bg2.jpg" class="background-image"></image>
+      <view class="cn-title">目标和关键成果</view>
+      <view class="en-subtitle">Objective and Key Result</view>
+    </view>
+    <view class="content">
+      <view>目标：我想让网站打开速度快一些</view>
+      <view>--- 成果：打开速度快30%</view>
+      <view>---- todo：替换体积较大的资源库</view>
+      <view>---- todo：JavaScript代码压缩</view>
+      <view>---- todo：图片资源压缩和代理</view>
+    </view>
+  </view>
+  <view bind:tap="switchToTodo" class="button" hover-class="button_hover">立即体验</view>
+</view>
