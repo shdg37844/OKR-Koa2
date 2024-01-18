@@ -1,4 +1,6 @@
 // pages/okr/okr.js
+const app = getApp();
+
 Page({
   data: {
     showActionsheet: false,
@@ -7,39 +9,38 @@ Page({
         { text: '编辑', value: 2 },
         { text: '已完成', value: 3 },
         { text: '删除', value: 4 }
-    ]
+    ],
+    objectives:[],
+    index:null
   },
 
   btnClick(e) {
-    let index = e.detail.index;
-    if (this.data.groups[index].value === 1) {
+    let btnindex = e.detail.index;
+    if (this.data.groups[btnindex].value === 1) {
       let url = '/pages/okr_detail/okr_detail'
       wx.navigateTo({url})
       this.setData({
         showActionsheet: false
       })
-    }else if (this.data.groups[index].value === 2) {
-      let url = '/pages/okr_edit/okr_edit'
+    }else if (this.data.groups[btnindex].value === 2) {
+      let index = this.data.index;
+      let url = `/pages/okr_edit/okr_edit?objective_id=${index}`
       wx.navigateTo({url})
       this.setData({
         showActionsheet: false
       })
-    }else if (this.data.groups[index].value === 3) {
+    }else if (this.data.groups[btnindex].value === 3) {
 
-    }else if (this.data.groups[index].value === 4) {
+    }else if (this.data.groups[btnindex].value === 4) {
 
     }else {
       this.setData({
         showActionsheet: false
       })
     }
-
-
-   
   },
-  
   Click(e) {
-    let index = e.currentTarget.dataset.index;
+    let index = e.currentTarget.dataset.id;
     this.setData({
       showActionsheet: true,
       index:index
@@ -47,8 +48,22 @@ Page({
   },
 
   onLoad(options) {
-
+    this.getObjectiveData();
   },
+  getObjectiveData() {
+    wx.request({
+      url: 'http://localhost:3000/objective',
+      method: 'GET',
+      success:(res) => {
+        app.globalData.objectives = res.data.data;
+        this.setData({
+          objectives:app.globalData.objectives
+        })
+      }
+    })
+   },
+
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -61,7 +76,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
   },
 
   /**

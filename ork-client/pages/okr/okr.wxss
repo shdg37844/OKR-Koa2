@@ -19,10 +19,21 @@
 .okr-list {
   display: flex;
   flex-direction: column;
-  gap:10rpx;
+  gap:15rpx;
   margin-top:25rpx;
 }
 
 .okr-item {
   background-color: #f5f5f5;
+}
+
+.o-content {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.o-time {
+  margin-left:15rpx;
+  font-size:14px;
+  color:#999;
 }

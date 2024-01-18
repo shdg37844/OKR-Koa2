@@ -1,1 +1,59 @@
-/* pages/okr_edit/okr_edit.wxss */
+.page-container {
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  padding:40rpx 35rpx;
+  justify-content: space-between;
+}
+
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap:20rpx;
+}
+
+.title {
+  font-size: 14px;
+}
+
+.input-box {
+  display: flex;
+  justify-content: space-between;
+  gap:20rpx;
+}
+
+.objective-input {
+  flex:1;
+  padding:15rpx;
+  border:1px solid #333;
+}
+
+.change-btn {
+  display: flex;
+  justify-content: center;
+  background-color: #dedede;
+  color:#999;
+  border:1px solid #999;
+}
+
+.change-btn_hover {
+  color: #999;
+  background-color: #f8f8f8;
+}
+
+.KR-input {
+  flex:1;
+  padding:15rpx;
+  border:1px solid #333;
+}
+
+.save-btn {
+  margin-bottom: 75rpx;
+  background-color: #666;
+  color:#fff;
+}
+
+.save-btn_hover {
+  background-color: #dedede;
+  color: #666;
+}

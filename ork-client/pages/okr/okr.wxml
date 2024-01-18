@@ -1,7 +1,10 @@
 <view class="page-container">
   <navigator url="/pages/okr_create/okr_create" class="add-btn" hover-class="add-btn_hover">添加OKR</navigator>
   <view class="okr-list">
-    <view bind:tap="Click" class="okr-item" data-index="{{index}}">okr1</view>
+    <view bind:tap="Click" class="okr-item" wx:for="{{objectives}}" data-id="{{item.id}}" >
+      <view class="o-content">{{item.Ocontent}}</view>
+      <view class="o-time">创建时间{{item.create_at}}</view>
+    </view>
   </view>
   <mp-actionSheet bindactiontap="btnClick" show="{{showActionsheet}}" actions="{{groups}}">
   </mp-actionSheet>

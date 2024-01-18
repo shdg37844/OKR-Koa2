@@ -1,9 +1,21 @@
 <view class="page-container">
-  <view class="create-box">
-  <view class="create-title"></view>
-  <view>
-    <input type="text" class="create-input"/>
-    <button>新增</button>
+  <view class="item-list">
+    <view class="item-box">
+      <view class="title">Objective 目标：</view>
+      <view class="input-box">
+        <input type="text" class="objective-input" placeholder="请输入你的目标" bindinput="handleObjectiveChange"  value="{{objectiveValue}}"/>
+        <button style="width:40rpx;" class="change-btn" hover-class="change-btn_hover" bind:tap="onTapAdd">+</button>
+      </view>
+    </view>
+
+    <block class="item-box" wx:for="{{KRValue}}"  wx:key="index">
+      <view class="title">Keyresult 成果{{index+1}}：</view>
+      <view class="input-box">
+        <input type="text" class="KR-input" placeholder="请输入你的目标" bindinput="handleKRChange"  value="{{KRValue[index]}}"  data-index="{{index}}"/>
+        <button style="width:40rpx;" class="change-btn" hover-class="change-btn_hover" bind:tap="onTapDel"  data-index="{{index}}">-</button>
+      </view>
+    </block>
   </view>
-  </view>
+
+  <button class="add-btn" hover-class="add-btn_hover" bind:tap="handleAdd">新增</button>
 </view>

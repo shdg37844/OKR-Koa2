@@ -75,10 +75,8 @@ Page({
           value: '',
           todo: [...app.globalData.todo],
         });
-        console.log('todoooo',todo)
-        console.log('globaltodoooo',app.globalData.todo)
         wx.showToast({
-          title: '添加成功',
+          title: '添加成功！',
           icon: 'none',
         });
       },

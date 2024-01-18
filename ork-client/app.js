@@ -1,6 +1,8 @@
 // app.js
 App({
   globalData: {
-    todo:[]
+    todo:[],
+    objectives:[],
+    keyresults:[]
   },
 })
