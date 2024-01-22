@@ -12,7 +12,7 @@
       <view class="title">Keyresult 成果{{index+1}}：</view>
       <view class="input-box">
         <input type="text" class="KR-input" placeholder="请输入你的目标" bindinput="handleKRChange"  value="{{KRValue[index].KRcontent}}" data-index="{{index}}"/>
-        <button style="width:40rpx;" class="change-btn" hover-class="change-btn_hover" bind:tap="onTapDel"  data-index="{{index}}">-</button>
+        <button style="width:40rpx;" class="change-btn" hover-class="change-btn_hover" bind:tap="onTapDel"  data-index="{{index}}" data-id="{{item.id}}">-</button>
       </view>
     </block>
   </view>

@@ -78,14 +78,19 @@ Page({
         wx.showToast({
           title: '新增成功！',
           icon: 'none',
+          duration: 500
         });
         this.setData({
           objectiveValue:'',
           KRValue:'',
           objectives: [...app.globalData.objectives],
           keyresults:[...app.globalData.keyresults]
-        })
-
+        });
+        setTimeout(() => {
+          wx.switchTab({
+            url: '/pages/okr/okr'
+          });
+        },500);
     }
     })
     

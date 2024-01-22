@@ -1,2 +1,10 @@
-<!--pages/todo_keyresult/todo_keyresult.wxml-->
-<text>pages/todo_keyresult/todo_keyresult.wxml</text>
+<view class="page-container">
+  <view class="tk-title">请选择关键成果KR（KeyResult）进行绑定</view>
+  <view class="tk-content">
+    <view class="tk-obj">{{objectives.Ocontent}}</view>
+    <view class="tk-KR">
+      <view bind:tap="Connect" wx:key="id" wx:for="{{keyresults}}" data-id="{{item.id}}" class="KR-item {{item.active ? 'active' : ''}}">{{item.KRcontent}}</view>
+    </view>
+  </view>
+
+</view>

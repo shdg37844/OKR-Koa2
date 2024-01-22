@@ -1,18 +1,75 @@
 // pages/okr_detail/okr_detail.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    obj_id:null,
+    objectives:[],
+    keyresults:[],
+    todos:[],
+    krIds:[],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
+  kyDone(e) {
+    let id = e.currentTarget.dataset.id;
+    let keyresults = this.data.keyresults;
 
+    wx.request({
+      url: `http://localhost:3000/api/keyresult/${id}`,
+      method: 'PUT',
+      data: {
+        KRcompleted:1
+      },
+      success: (res) => {
+        let updateIndex = keyresults.findIndex(item => item.id === id)
+        keyresults[updateIndex].KRcompleted = 1
+        this.setData({
+          showActionsheet: false,
+          keyresults:keyresults
+        });
+      },
+    });
+  },
+
+  onLoad(options) {
+    let obj_id = options.objective_id;
+    this.getSelectedData( obj_id);
+    this.setData({
+      obj_id: obj_id 
+    });
+  },
+
+  getSelectedData(id) {
+    wx.request({
+      url: 'http://localhost:3000/okr/' +id,
+      method: 'GET',
+      success:(res) => {
+        let objectives = res.data.data.objective[0];
+        let keyresults = res.data.data.keyresults;
+        let krIds = keyresults.map(item => item.id);
+        //console.log('krid',krIds)
+        this.setData({
+          objectives:objectives,
+          keyresults:keyresults,
+          krIds:krIds
+        },() => {
+          // 在数据设置完成后再调用 getTodos
+          this.getTodos();
+      })
+      }
+    })
+  },
+  getTodos() {
+    let krIds = this.data.krIds
+    wx.request({
+      url: `http://localhost:3000/todo/keyresult?${krIds.map(id => `krIds=${id}`).join('&')}`,
+      method: 'GET',
+      success:(res) => {
+        let todos = res.data.data
+        console.log('返回的todos',res.data.data)
+        this.setData({
+          todos:todos
+        })
+      }
+    })
   },
 
   /**

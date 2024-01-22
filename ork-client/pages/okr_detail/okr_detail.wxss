@@ -1,1 +1,71 @@
 /* pages/okr_detail/okr_detail.wxss */
+.page-container {
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  padding:40rpx 35rpx;
+}
+
+.okr-objs {
+  padding:15rpx;
+  background-color: #f5f5f5;
+}
+
+.obj-content {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.obj-time {
+  margin-left:15rpx;
+  font-size:14px;
+  color:#999;
+}
+
+.okr-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap:45rpx;
+  margin-top: 35rpx;
+  margin-left:40rpx;
+}
+
+.kr-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.kr-status {
+  font-size: 15px;
+  color:#999;
+}
+
+.okr-detail-kr.active {
+  text-decoration: line-through;
+}
+
+.okr-detail-kr::before {
+  content:'';
+  display: inline-block;
+  width:20rpx;
+  height:20rpx;
+  margin-right:15rpx;
+  border-radius: 50%;
+  background-color: #999;
+}
+
+.okr-detail-todo {
+  margin-left:55rpx;
+  font-size: 14px;
+  color:#999;
+}
+
+.okr-detail-todo:before {
+  content:'';
+  display: inline-block;
+  width:10rpx;
+  height:10rpx;
+  margin-right:15rpx;
+  border-radius: 50%;
+  background-color: #999;
+}

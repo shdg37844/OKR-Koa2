@@ -36,14 +36,55 @@ const okrController = {
         let id = ctx.params.id;
 
         try {
-            let objective = await Objective.select({id})
-            let keyresults = await Keyresult.select({objective_id:id})
-            ctx.body = { code: 200, data: {objective, keyresults} }
+            let objective = await Objective.select({ id })
+            let keyresults = await Keyresult.select({ objective_id: id })
+            ctx.body = { code: 200, data: { objective, keyresults } }
 
         } catch (e) {
             ctx.body = { code: 0, data: e }
         }
-        
+
+    },
+    update: async function (ctx, next) {
+        let id = ctx.params.id
+        let Ocontent = ctx.request.body.Ocontent
+        let KRcontent = ctx.request.body.KRcontent
+        let Ocompleted = ctx.request.body.Ocompleted
+        let KRcompleted = ctx.request.body.KRcompleted
+
+        try {
+            const updateObjectiveId = await Objective.update(id, { Ocontent: Ocontent, Ocompleted: Ocompleted })
+            let updateKRIds = [];
+            let newKRIds = [];
+
+            for (KR of KRcontent) {
+                if (KR.id) {
+                    const updateKRId = await Keyresult.update(KR.id, { KRcontent: KR.KRcontent })
+                    updateKRIds.push(updateKRId);
+                }else {
+                    const newKRId = await Keyresult.insert({ KRcontent: KR.KRcontent, objective_id: id, KRcompleted: KRcompleted });
+                    newKRIds.push(newKRId);
+                }
+            }
+            ctx.body = { code: 200, data: { updateObjectiveId, newKRIds, updateKRIds } }
+        } catch (e) {
+            console.error(e);
+            ctx.body = { code: 0, data: e }
+        }
+    },
+    delete: async function (ctx, next) {
+        let id = ctx.params.id
+
+        try {
+            const objective = await Objective.delete(id)
+            const keyresult = await Keyresult.deleteColumn({objective_id:id})
+            ctx.body = { code: 200, data: { objective, keyresult } }
+            console.log('删去的obj：', objective, "删去的kr：",keyresult)
+
+        } catch (e) {
+            console.error(e);
+            ctx.body = { code: 0, data: e }
+        }
     },
 }
 

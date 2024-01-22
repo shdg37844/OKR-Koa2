@@ -10,16 +10,47 @@ const keyresultsController = {
             ctx.body = { code: 0, data: e }
         }
     },
-    // showSomeItem: async function (ctx, next) {
-    //     let id = ctx.params.id
+    update: async function (ctx, next) {
+        let KRcompleted = ctx.request.body.KRcompleted
+        let id = ctx.params.id
 
-    //     try {
-    //         let keyresult = await Keyresult.select(id)
-    //         ctx.body = { code: 200, data: keyresult }
-    //     } catch (e) {
-    //         ctx.body = { code: 0, data: e }
-    //     }
-    // },
+        try {
+            const updateId = await Keyresult.update(id, { KRcompleted })
+            ctx.body = { code: 200, data: updateId }
+        } catch (e) {
+            console.error(e);
+            ctx.body = { code: 0, data: e }
+        }
+    },
+    insert: async function (ctx, next) {
+        let KRcontent = ctx.request.body.KRcontent
+        let KRcompleted = ctx.request.body.KRcompleted
+
+        if (!KRcontent) {
+            ctx.body = { code: 0, data: 'params empty!' };
+            return
+        }
+
+        try {
+            const insertId = await Keyresult.insert({ KRcontent, KRcompleted })
+            ctx.body = { code: 200, data: insertId }
+        } catch (e) {
+            console.error(e);
+            ctx.body = { code: 0, data: e }
+        }
+    },
+    delete: async function (ctx, next) {
+        let id = ctx.params.id
+
+        try {
+            const keyresult = await Keyresult.delete(id)
+            ctx.body = { code: 200, data: keyresult }
+        } catch (e) {
+            console.error(e);
+            ctx.body = { code: 0, data: e }
+        }
+    },
+
 }
 
 module.exports = keyresultsController

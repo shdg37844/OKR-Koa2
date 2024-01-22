@@ -11,28 +11,29 @@ Page({
         { text: '删除', value: 4 }
     ],
     objectives:[],
+    keyresults:[],
     index:null
   },
 
   btnClick(e) {
     let btnindex = e.detail.index;
+    let index = this.data.index;
     if (this.data.groups[btnindex].value === 1) {
-      let url = '/pages/okr_detail/okr_detail'
+      let url = `/pages/okr_detail/okr_detail?objective_id=${index}`
       wx.navigateTo({url})
       this.setData({
         showActionsheet: false
       })
     }else if (this.data.groups[btnindex].value === 2) {
-      let index = this.data.index;
       let url = `/pages/okr_edit/okr_edit?objective_id=${index}`
       wx.navigateTo({url})
       this.setData({
         showActionsheet: false
       })
     }else if (this.data.groups[btnindex].value === 3) {
-
+      this.okrDone();
     }else if (this.data.groups[btnindex].value === 4) {
-
+      this.delete();
     }else {
       this.setData({
         showActionsheet: false
@@ -46,18 +47,69 @@ Page({
       index:index
     })
   },
+  okrDone() {
+    let id = this.data.index;
+    let objectives = this.data.objectives;
+
+    wx.request({
+      url: `http://localhost:3000/api/okr/${id}`,
+      method: 'PUT',
+      data: {
+        Ocompleted:1
+      },
+      success: (res) => {
+        let updateIndex = objectives.findIndex(item => item.id === id)
+        objectives[updateIndex].Ocompleted = 1
+        this.setData({
+          showActionsheet: false,
+          objectives:objectives
+        });
+      },
+    });
+  },
+  delete() {
+    let id = this.data.index
+    let objectives = this.data.objectives
+    wx.request({
+      url: `http://localhost:3000/api/okr/${id}`,
+      method: "DELETE",
+      success:(res) => {
+        let deleteIndex = objectives.findIndex(item => item.id === id);
+        if (deleteIndex !== -1) {
+          objectives.splice(deleteIndex,1);
+          this.setData({
+            objectives:objectives,
+            showActionsheet: false
+          });
+        }
+      }
+    })
+  },
 
   onLoad(options) {
     this.getObjectiveData();
+    this.getKeyresultData();
   },
   getObjectiveData() {
     wx.request({
       url: 'http://localhost:3000/objective',
       method: 'GET',
       success:(res) => {
-        app.globalData.objectives = res.data.data;
+        let objectives = res.data.data;
         this.setData({
-          objectives:app.globalData.objectives
+          objectives:objectives
+        })
+      }
+    })
+   },
+   getKeyresultData() {
+    wx.request({
+      url: 'http://localhost:3000/keyresult',
+      method: 'GET',
+      success:(res) => {
+        let keyresults = res.data.data;
+        this.setData({
+          keyresults:keyresults
         })
       }
     })
@@ -76,6 +128,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    this.getObjectiveData();
+    this.getKeyresultData();
   },
 
   /**

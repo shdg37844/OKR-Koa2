@@ -10,6 +10,15 @@
       <view class="todo-time">创建时间{{item.create_at}}</view>
     </view>
   </view>
+
   <mp-actionSheet bindactiontap="btnClick" show="{{showActionsheet}}" actions="{{groups}}">
   </mp-actionSheet>
+
+  <!-- modal组件 遮罩层 -->
+  <modal show="{{showModal}}" height='60%' bindcancel="modalCancel" bindconfirm='modalConfirm'>
+   <view class='modal-content' wx:for="{{objectives}}">
+    <view bind:tap="selectObj" data-id="{{item.id}}" class="obj" hover-class="obj_hover">{{item.Ocontent}}</view>
+   </view>
+  </modal>
+
 </view>

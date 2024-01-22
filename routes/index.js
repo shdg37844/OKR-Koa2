@@ -4,19 +4,23 @@ const todosController = require('./../controllers/todos')
 const objectivesController = require('./../controllers/objectives')
 const keyresultsController = require('./../controllers/keyresults')
 const okrController = require('./../controllers/okr')
+const TodoKeyresultsController = require('./../controllers/todo_keyresults')
+const authMiddleware = require('./../middlewares/user');
 
 //todo
-router.get('/todos',todosController.show)
+router.get('/todos', todosController.show)
 
 //objectives
-router.get('/objective', objectivesController.show)
-//router.get('/objective/:id', objectivesController.showSomeItem)
+router.get('/objective',  objectivesController.show)
 
 //keyresults
-router.get('/keyresult', keyresultsController.show)
-//router.get('/keyresult/:id', keyresultsController.showSomeItem)
+router.get('/keyresult',  keyresultsController.show)
 
 //okr
-router.get('/okr/:id', okrController.showSomeItem)
+router.get('/okr/:id',okrController.showSomeItem)
+
+//todo_keyresults
+router.get('/todo/:id/keyresult', TodoKeyresultsController.showActive)
+router.get('/todo/keyresult',  TodoKeyresultsController.showTodos)
 
 module.exports = router;

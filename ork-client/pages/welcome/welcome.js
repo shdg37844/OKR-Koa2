@@ -1,17 +1,31 @@
 // pages/welcome/welcome.js
+const user = require('../../models/user.js');
+
 Page({
   data: {
-
+    
   },
 
   onLoad(options) {
+    const token = wx.getStorageSync('token') || ''
+    if(token) {
+      wx.navigateTo({
+        url: 'pages/todo/todo',
+      })
+    }
+  },
+  loginBtn() {
+    user.login().then(() => {
+      wx.navigateTo({
+        url: '/pages/todos/todos'
+      });
+    }).catch(err => {
+      console.log('登录失败:', err);
+    });
   },
 
-  switchToTodo() {
-    wx.switchTab({
-      url: '/pages/todo/todo',
-    })
-  },
+
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成

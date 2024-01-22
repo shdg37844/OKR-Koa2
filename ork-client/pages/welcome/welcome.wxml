@@ -13,5 +13,5 @@
       <view>---- todo：图片资源压缩和代理</view>
     </view>
   </view>
-  <view bind:tap="switchToTodo" class="button" hover-class="button_hover">立即体验</view>
+  <view bind:tap="loginBtn" class="button" hover-class="button_hover">立即体验</view>
 </view>

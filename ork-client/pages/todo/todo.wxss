@@ -41,3 +41,19 @@
   font-size:14px;
   color:#999;
 }
+
+/* .modal-content {
+  display: flex;
+  flex-direction: column;
+  gap:40rpx;
+} */
+
+.obj {
+  border-bottom: 1px solid #333;
+  padding:25rpx;
+}
+
+.obj_hover {
+  background-color: #eee;
+  
+}

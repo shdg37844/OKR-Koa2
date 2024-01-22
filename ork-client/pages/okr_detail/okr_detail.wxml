@@ -1,0 +1,21 @@
+<view class="page-container">
+  <view class="okr-box">
+    <view class="okr-objs">
+      <view class="obj-content">{{objectives.Ocontent}}</view>
+      <view class="obj-time">创建时间：{{objectives.create_at}}</view>
+    </view>
+    <view class="okr-detail-list">
+      <view class="okr-detail-item" wx:for="{{keyresults}}" wx:for-item="krItem" data-id="{{krItem.id}}">
+      <view class="kr-box">
+        <view class="okr-detail-kr {{krItem.KRcompleted === 1 ? 'active' : ''}}">{{krItem.KRcontent}}</view>
+        <view class="kr-status" bind:tap="kyDone" data-id="{{krItem.id}}">{{krItem.KRcompleted === 1 ? '已完成' : '点击标记'}}</view>
+      </view>  
+      <view class="okr-detail-todo" wx:for="{{todos}}" wx:for-item="todoItem" wx:if="{{todoItem.kr_id == krItem.id}}">{{todoItem.todo}}</view>
+    </view>
+
+    </view>
+
+
+  </view>
+
+</view>

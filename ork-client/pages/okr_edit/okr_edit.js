@@ -6,28 +6,39 @@ Page({
     objectives:[],
     keyresults:[],
     objectiveValue:'',
-    KRValue:['']
+    KRValue:[''],
+    id:null,
   },
   handleObjectiveChange(event) {
+    let newObjValue = { ...this.data.objectiveValue, Ocontent: event.detail.value };
     this.setData({
-      objectiveValue: event.detail.value
+      objectiveValue: newObjValue
     });
   },
   handleKRChange(event) {
     let index = event.currentTarget.dataset.index;
     let KRValue = this.data.KRValue
-    KRValue[index] = event.detail.value;
+    let newKRValue = { ...KRValue[index], KRcontent: event.detail.value }
+    KRValue[index] = newKRValue;
     this.setData({
       KRValue: KRValue
     });
   },
   onTapDel(e) {
+    let id = e.currentTarget.dataset.id;
     let index = e.currentTarget.dataset.index;
     let KRValue = this.data.KRValue;
-    KRValue.splice(index,1);
-    this.setData({
-      KRValue: KRValue
-    })
+    
+    wx.request({
+      url: `http://localhost:3000/api/keyresult/${id}`,
+      method: 'DELETE',
+      success:(res) => {
+        KRValue.splice(index,1);
+        this.setData({
+          KRValue: KRValue
+        })
+      }
+    });
   },
   onTapAdd:function(e){
     let KRValue = this.data.KRValue;
@@ -35,8 +46,38 @@ Page({
     this.setData({
       KRValue:KRValue
     })
-   },
 
+   },
+   handleSave() {
+    let id = this.data.id;
+    let objectiveValue = this.data.objectiveValue;
+    let KRValue = this.data.KRValue;
+
+    if (!objectiveValue || KRValue.every(kr => !kr)) {
+      wx.showToast({
+        icon: 'none',
+        title: '内容不能为空',
+      });
+      return;
+    }
+
+    wx.request({
+      url: 'http://localhost:3000/api/okr/' +id,
+      method: 'PUT',
+      data:{
+        Ocontent:objectiveValue,
+        KRcontent:KRValue,
+        KRcompleted:0
+      },
+      success:(res) => {
+
+        wx.showToast({
+          title: '修改成功！',
+          icon: 'none',
+        });
+      }
+    })
+   },
 
 
   /**
@@ -44,20 +85,25 @@ Page({
    */
   onLoad(options) {
     let id = options.objective_id;
-    this.getSelectedData(id)
+    this.getSelectedData(id);
+    this.setData({
+      id: id 
+    });
   },
   getSelectedData(id) {
     wx.request({
       url: 'http://localhost:3000/okr/' +id,
       method: 'GET',
       success:(res) => {
-        app.globalData.objectives = res.data.data.objective[0];
-        app.globalData.keyresults = res.data.data.keyresults;
+        let objectives = res.data.data.objective[0];
+        //console.log('resss',res.data.data.objective[0])
+        let keyresults = res.data.data.keyresults;
+        //console.log('krrrr',res.data.data.keyresults)
         this.setData({
-          objectives:app.globalData.objectives,
-          objectiveValue:app.globalData.objectives,
-          keyresults:app.globalData.keyresults,
-          KRValue:app.globalData.keyresults
+          objectives:objectives,
+          objectiveValue:objectives,
+          keyresults:keyresults,
+          KRValue:keyresults
         })
       }
     })

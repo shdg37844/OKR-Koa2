@@ -4,6 +4,7 @@ const app = getApp();
 Page({
   data: {
     showActionsheet: false,
+    showModal:false,
     groups: [
         { text: '关联', value: 1 },
         { text: '完成', value: 2 },
@@ -12,12 +13,15 @@ Page({
     todo:[],
     value:'',
     index:null,
+    objectives:[],
   },
   btnClick(e) {
     let index = e.detail.index;
     if (this.data.groups[index].value === 1) {
-      // let url = '/pages/todo_keyresult/todo_keyresult'
-      // wx.navigateTo({url})
+      this.setData({
+        showModal:true,
+        showActionsheet:false
+      })
     }else if (this.data.groups[index].value === 2) {
       this.todoDone();
     }else if (this.data.groups[index].value === 3) {
@@ -102,13 +106,14 @@ Page({
     });
   },
   todoDone(e) {
-    let id = this.data.index;
-    //let todo = this.data.todo;
+    let id = this.data.index; 
+    let end_at = new Date();
     wx.request({
       url: `http://localhost:3000/api/todos/${id}`,
       method: 'PUT',
       data: {
-        completed:1
+        completed:1,
+        end_at:end_at.toISOString()
       },
       success: (res) => {
         let updateIndex = app.globalData.todo.findIndex(item => item.id === id)
@@ -123,9 +128,24 @@ Page({
       }
     });
   },
+  modalCancel: function() {
+    this.setData({ showModal: false });
+  },
+  selectObj(e) {
+    let todoId = this.data.index;
+    let obj_id = e.currentTarget.dataset.id;
+    let url =`/pages/todo_keyresult/todo_keyresult?todo_id=${todoId}&objective_id=${obj_id}`;
+    wx.navigateTo({
+      url: url,
+    })
+  },
+
+
+
 
   onLoad(options) {
     this.getAllTodos();
+    this.getOBJData();
   },
   getAllTodos() {
     wx.request({
@@ -139,6 +159,21 @@ Page({
       }
     })
    },
+   getOBJData() {
+    wx.request({
+      url: 'http://localhost:3000/objective',
+      method: 'GET',
+      success:(res) => {
+        let objectives = res.data.data;
+        this.setData({
+          objectives:objectives,
+        })
+      }
+    })
+   },
+
+
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -151,7 +186,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.getAllTodos();
+    this.getOBJData();
   },
 
   /**

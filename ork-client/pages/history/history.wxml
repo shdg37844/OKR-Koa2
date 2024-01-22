@@ -3,7 +3,8 @@
   <view class="done-list">
     <view class="done-item" bind:tap="Click" data-id="{{item.id}}" wx:for="{{todo}}" wx:if="{{item.completed===1}}">
       <view class="done-content">{{item.todo}}</view>
-      <view class="done-time">创建时间{{item.create_at}}</view>
+      <view class="done-time">创建时间：{{item.create_at}}</view>
+      <view class="done-time">完成时间：{{item.end_at}}</view>
       <view class="done-pic-box">
         <image src="./../../images/tododone.png" class="done-pic"/>
       </view>

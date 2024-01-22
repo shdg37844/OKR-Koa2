@@ -1,5 +1,7 @@
 const todoModel = require('./../models/todos')
 const Todo = new todoModel()
+const TodoKeyresultModel = require('./../models/todo_keyresults')
+const TodoKeyresult = new TodoKeyresultModel()
 
 const todosController = {
     show: async function (ctx, next) {
@@ -31,9 +33,10 @@ const todosController = {
     update: async function (ctx, next) {
         let completed = ctx.request.body.completed
         let id = ctx.params.id
+        let end_at = ctx.request.body.end_at
 
         try {
-            const updateId = await Todo.update(id, { completed })
+            const updateId = await Todo.update(id, { completed, end_at })
             ctx.body = { code: 200, data: updateId }
         } catch (e) {
             console.error(e);
@@ -44,6 +47,7 @@ const todosController = {
         let id = ctx.params.id
 
         try {
+            await TodoKeyresult.deleteColumn('todo_id', id)
             const todo = await Todo.delete(id)
             ctx.body = { code: 200, data: todo }
         } catch (e) {

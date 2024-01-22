@@ -1,18 +1,20 @@
 {
   "pages": [
+ "pages/todo/todo",       
+"pages/welcome/welcome",   
+
+
+ 
+
     "pages/okr/okr",
+    "pages/okr_detail/okr_detail",
+    
+    
     "pages/okr_create/okr_create",
-    
-    "pages/todo/todo",
-    
-    
-    "pages/welcome/welcome",
-    
     
     "pages/todo_keyresult/todo_keyresult",
     "pages/okr_edit/okr_edit",
     
-    "pages/okr_detail/okr_detail",
     "pages/history/history"
   ],
   "window": {

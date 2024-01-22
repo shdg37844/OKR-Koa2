@@ -10,16 +10,7 @@ const objectivesController = {
             ctx.body = { code: 0, data: e }
         }
     },
-    // showSomeItem: async function (ctx, next) {
-    //     let id = ctx.params.id
 
-    //     try {
-    //         let objective = await Objective.select(id)
-    //         ctx.body = { code: 200, data: objective }
-    //     } catch (e) {
-    //         ctx.body = { code: 0, data: e }
-    //     }
-    // },
 
 
 }
